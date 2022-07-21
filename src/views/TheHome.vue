@@ -1,8 +1,8 @@
 <template>
   <section>
     <h1>👍🏽 Compra ou Venda 👎🏽</h1>
-    <products-list />
     <search-products />
+    <products-list />
   </section>
 </template>
 
