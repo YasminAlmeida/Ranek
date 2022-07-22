@@ -1,42 +1,55 @@
 <template>
   <section class="containerProduct">
-    <div v-if="products && products.length > 0" class="products">
-      <div class="product" v-for="(product) in products" :key="product.id">
-        <router-link to="/">
-          <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0].src.titulo">
-          <h2 class="titulo">{{product.nome}}</h2>
-          <p class="preco">{{product.preco}}</p>         
-          <p class="descricao">{{product.descricao}}</p> 
-        </router-link>
-      </div> 
-    </div>
-    <div v-else-if="products && products.length === 0">
-      <p class="noResult" >Resultado não encontrado. Tente outro pruduto.</p>
-    </div>
+    <transition mode="out-in">
+      <div v-if="products && products.length > 0" class="products" key="products">
+        <!-- <div class="product" v-for="(product) in products" :key="product.id"> -->
+        <div class="product" v-for="(product, index) in products" :key="index">
+          <router-link to="/">
+            <img v-if="product.fotos" :src="product.fotos[0].src" :alt="product.fotos[0].src.titulo">
+            <h2 class="titulo">{{product.nome}}</h2>
+            <p class="preco">{{product.preco}}</p>         
+            <p class="descricao">{{product.descricao}}</p> 
+          </router-link>
+        </div> 
+      </div>
+      <div v-else-if="products && products.length === 0" key="noResult">
+        <p class="noResult" >Resultado não encontrado. Tente outro pruduto.</p>
+      </div>
+      <LoadingPage v-else key="loading"/>
+    </transition>      
+    <paginationthe-products :totalProduct="totalProduct" :productsForPage="productsForPage"/>
   </section>
 </template>
 
 <script>
+import PaginationtheProducts from "@/components/PaginationtheProducts.vue"
 import { api } from "@/TheServices.js";
-import {serialize} from "@/helpers.js"
+import {serialize} from "@/helpers.js";
+
 export default {
+  name: 'ProductsList',
+  components: {
+    PaginationtheProducts
+  },
   data() {
     return{
       products: null,
-      productsForPage: 9
+      productsForPage: 9,
+      totalProduct: 0
     }
   },
-  name: 'ProductsList',
   computed: {
     url() {
       const query = serialize(this.$route.query)
-      return `/produto?_limit=${this.productsForPage} + ${query}`;
+      return `/produto?_limit=${this.productsForPage}${query}`;
     }
   },
   methods: {
     getProducts(){
+      this.products = null;
       api.get(this.url)
       .then(r=>{
+        this.totalProduct = Number(r.headers["x-total-count"]);
         this.products = r.data;
       })
     }
@@ -48,7 +61,7 @@ export default {
   },
   created(){
     this.getProducts();
-  }
+  },
 }
 </script>
 

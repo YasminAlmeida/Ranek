@@ -15,9 +15,14 @@ export default {
   },
   methods: {
     searchProducts(){
-    this.$router.push({query: {q: this.search }});
+    this.$router.push({query: {q: this.search}});
     }
-  }
+  },
+    watch: {
+    searchProducts(){
+      this.totalPage()
+    }
+  } 
 }
 </script>
 
