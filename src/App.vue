@@ -2,7 +2,9 @@
   <div id="app">
     <the-header />
     <main id="main">
-      <router-view/>
+      <transition>
+        <router-view/>
+      </transition>
     </main>
     <the-footer />
   </div>
