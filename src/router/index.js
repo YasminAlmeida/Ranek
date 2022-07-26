@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import TheHome from '@/views/TheHome.vue';
 import TheProduct from '@/views/TheProduct.vue';
 import TheLogin from '@/views/TheLogin.vue';
+import TheUsuario from '@/views/usuario/TheUser.vue';
 
 Vue.use(VueRouter);
 export default new VueRouter({
@@ -24,6 +25,11 @@ export default new VueRouter({
       path: '/TheLogin',
       name: 'TheLogin',
       component: TheLogin,
+    },
+    {
+      path: '/TheUsuario',
+      name: 'TheUsuario',
+      component: TheUsuario,
     },
   ],
   scrollBehavior() {

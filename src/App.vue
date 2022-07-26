@@ -2,7 +2,7 @@
   <div id="app">
     <the-header />
     <main id="main">
-      <transition>
+      <transition mode="out-in">
         <router-view/>
       </transition>
     </main>
@@ -68,6 +68,9 @@ img{
 }
 #main{
   flex: 1;
+}
+label{
+  margin-bottom: 5px;
 }
 input, textarea {
   border-radius: 4px;
