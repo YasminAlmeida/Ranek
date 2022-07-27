@@ -1,4 +1,4 @@
-import { api } from '@/TheServices';
+import { api } from '@/TheServices.js';
 import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
@@ -30,15 +30,30 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getUsuario(context, payload) {
-      api.get(`/usuario/${payload}`).then((r) => {
+    getUser(context, payload) {
+      api.get(`/TheUser/${payload}`).then((r) => {
         context.commit('UPDATE_USER', r.data);
         context.commit('UPDATE_LOGIN', true);
       });
     },
     createUser(context, payload) {
       context.commit('UPDATE_USER', { id: payload.email });
-      api.post('/usuario', payload);
+      api.post('/TheUser', payload);
+    },
+    LogOutUser(context) {
+      context.commit('UPDATE_USER', {
+        id: '',
+        nome: '',
+        email: '',
+        password: '',
+        cep: '',
+        rua: '',
+        numero: '',
+        bairro: '',
+        cidade: '',
+        estado: '',
+      });
+      context.commit('UPDATE_LOGIN', false);
     },
   },
   modules: {},

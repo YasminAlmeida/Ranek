@@ -30,11 +30,20 @@
 import { mapFields } from '@/helpers.js';
 import { getCep } from '@/TheServices.js'
 export default {
-  name:"userForm",
+  name:"UserForm",
   computed:{
     ...mapFields({
-    fields: ["nome","password", "email", "cep", "rua", "numero", "bairro", "cidade","estado"],
-    base: "usuario",
+    fields: 
+    ["nome",
+      "password",
+      "email",
+      "cep",
+      "rua",
+      "numero",
+      "bairro",
+      "cidade",
+      "estado"],
+    base: "TheUser",
     mutation: "UPDATE_USER"
     }),
   },

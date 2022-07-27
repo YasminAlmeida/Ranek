@@ -25,7 +25,7 @@ export default {
     try{
       await this.$store.dispatch("createUser", this.$store.state.usuario);
       await this.$store.dispatch("getUser", this.$store.state.usuario.email);
-      this.$router.push({name: "usuario"})
+      this.$router.push({name: "TheUser"})
     } catch(error){
       console.log(error)
     }
