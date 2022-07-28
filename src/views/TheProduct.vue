@@ -10,7 +10,10 @@
         <h1>{{produto.nome}}</h1>
         <p class="preco">{{produto.preco | numberprice}}</p>
         <p class="descricao">{{produto.descricao}}</p>
-        <button class="btn" v-if="produto.vendido === 'false'">Comprar</button>
+        <transition mode="out-in" v-if="produto.vendido === 'false'">
+          <button class="btn" v-if="!finalize" @click="finalize = true">Comprar</button>
+          <FinalizeBuy :produto="produto" v-else/>
+        </transition>
         <button v-else class="btn" disabled>Produto Esgotado</button>
       </div>
     </div>    
@@ -20,13 +23,19 @@
 </template>
 
 <script>
+
+import FinalizeBuy from "@/components/FinalizeBuy.vue"
 import { api } from "@/TheServices.js"
 export default {
 name: "TheProduct",
 props: ["id"],
+components:{
+  FinalizeBuy,
+},
 data(){
   return{
-    produto: null
+    produto: null,
+    finalize: false,
   }
 },
 methods: {

@@ -6,6 +6,7 @@
     <transition-group  mode="out-in" v-if="user_products" name="list" tag="ul">
       <li v-for="(produto, index) in user_products" :key="index">
         <ProductItem :produto="produto"><p>{{produto.descricao}}</p></ProductItem>
+        <button class="deleteBtn" @click="deleteProduct(produto.id)"></button>
       </li>
     </transition-group>
   </section>
@@ -14,8 +15,9 @@
 <script>
 import AddProduct from '@/components/AddProduct.vue'
 import ProductItem from '@/components/ProductItem.vue'
-
+import { api } from "@/TheServices.js"
 import { mapActions, mapState } from 'vuex'
+
 export default {
   nome:"UserProducts",
   components: {
@@ -26,7 +28,20 @@ export default {
     ...mapState(["login", "usuario", "user_products"])
   },
   methods:{
-    ...mapActions(["getUserProducts"])
+    ...mapActions(["getUserProducts"]),
+
+    deleteProduct(id){
+      const confirma = window.confirm('Deseja Deletar Esse Produto?')
+      if (confirma) {
+        api.delete(`/produto/${id}`)
+        .then(() => {
+          this.getUserProducts();
+        })
+        .catch((err) => {
+          console.log(err.r)
+        });
+      }
+    }
   },
   watch:{
     login(){
@@ -53,5 +68,16 @@ h2{
 .list-enter-active,
 .list-leave-active{
   transition: all .3s;
+}
+.deleteBtn{
+  position: absolute;
+  right: 0; 
+  background: url("../../assets/remove.svg") no-repeat center center;
+  width: 24px;
+  height: 24px;
+  text-align: -140px;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
 }
 </style>

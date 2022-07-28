@@ -1,12 +1,14 @@
 <template>
   <section>
     <form action="">
-      <label for="nome">Nome</label>
-      <input type="text" id="nome" name="nome" v-model="nome">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" v-model="email">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" v-model="password">
+      <div class="user" v-if="ShowDataLogin">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" v-model="nome">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" v-model="email">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" v-model="password">
+      </div>
       <label for="cep">CEP</label>
       <input type="text" id="cep" name="cep" v-model="cep" @keyup="fillCep">
       <label for="rua">Rua</label>
@@ -30,7 +32,7 @@
 import { mapFields } from '@/helpers.js';
 import { getCep } from '@/TheServices.js'
 export default {
-  name:"UserForm",
+  name:'UserForm',
   computed:{
     ...mapFields({
     fields: 
@@ -43,9 +45,12 @@ export default {
       "bairro",
       "cidade",
       "estado"],
-    base: "TheUser",
+    base: "usuario",
     mutation: "UPDATE_USER"
     }),
+    ShowDataLogin(){
+      return(!this.$store.state.login || this.$route.name === 'UserEdit')
+    }
   },
   methods: {
     fillCep(){
@@ -64,10 +69,14 @@ export default {
 </script>
 
 <style scoped>
-  form{
+  form,
+  .user{
     display: grid;
     grid-template-columns: 80px 1fr;
     align-items: center;
+  }
+  .user{
+    grid-column: 1/3;
   }
   .button{
     grid-column: 2;
