@@ -3,18 +3,20 @@
     <h2>Crie a sua Conta</h2>
     <transition mode="out-in">
       <button v-if="!criar" class="btn" @click="criar = true">Criar Conta</button>
-      <UsuarioForm v-else>
+      <UserForm v-else>
         <button class="btn btn-form" @click.prevent="createUser">Criar ususário</button>
-      </UsuarioForm>
+      </UserForm>
     </transition>
   </section>
 </template>
 
 <script>
-import UsuarioForm from '@/components/UserForm.vue'
+import UserForm from '@/components/UserForm.vue'
 export default {
-  components: {UsuarioForm},
   name:"CreateLogin",
+  components:{
+    UserForm
+  },
   data(){
     return {
       criar: false
@@ -22,7 +24,7 @@ export default {
   },
   methods: {
    async createUser(){
-    try{
+    try{ 
       await this.$store.dispatch("createUser", this.$store.state.usuario);
       await this.$store.dispatch("getUser", this.$store.state.usuario.email);
       this.$router.push({name: "TheUser"})
