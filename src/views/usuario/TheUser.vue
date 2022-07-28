@@ -8,12 +8,14 @@
         <li>
           <router-link :to="{name: 'UserBuy'}">Compras</router-link>
         </li>
-        <li><router-link :to="{name: 'UserSale'}">Vendas</router-link>
+        <li>
+          <router-link :to="{name: 'UserSale'}">Vendas</router-link>
         </li>
         <li>
          <router-link :to="{name: 'UserEdit'}">Editar Usuário</router-link> 
         </li>
-        <li><button @click.prevent="LogOut">Deslogar</button>
+        <li>
+          <button @click.prevent="LogOut">Deslogar</button>
         </li>         
       </ul>
     </nav>
