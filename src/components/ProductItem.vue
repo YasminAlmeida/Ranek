@@ -16,8 +16,9 @@
 export default {
   name:"ProductItem",
   props: ["produto"]
-}
+} 
 </script>
+console.log('produto')
 
 <style scoped>
 .produto{
